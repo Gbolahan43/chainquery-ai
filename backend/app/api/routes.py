@@ -32,7 +32,7 @@ async def generate_query(
     error_msg = result.get("error")
 
     # Debug logging
-    print(f"🔍 Agent Result: sql_output={sql_result[:100] if sql_result else None}, error={error_msg}")
+    print(f"Agent Result: sql_output={sql_result[:100] if sql_result else None}, error={error_msg}")
 
     # 2. Save to DB (Hybrid Logic)
     db_query = UserQuery(
