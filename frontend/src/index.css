@@ -1,0 +1,132 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap");
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ChainQuery AI Design System - Dark IDE Theme with Solana Accents */
+
+@layer base {
+  :root {
+    --background: 240 10% 3.9%;
+    --foreground: 0 0% 98%;
+
+    --card: 240 10% 5%;
+    --card-foreground: 0 0% 98%;
+
+    --popover: 240 10% 6%;
+    --popover-foreground: 0 0% 98%;
+
+    --primary: 158 64% 52%;
+    --primary-foreground: 240 10% 4%;
+
+    --secondary: 240 5% 15%;
+    --secondary-foreground: 0 0% 98%;
+
+    --muted: 240 5% 18%;
+    --muted-foreground: 240 5% 65%;
+
+    --accent: 264 80% 60%;
+    --accent-foreground: 0 0% 98%;
+
+    --destructive: 0 72% 50%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 240 5% 18%;
+    --input: 240 5% 18%;
+    --ring: 158 64% 52%;
+
+    --radius: 0.375rem;
+
+    --sidebar-background: 240 10% 4%;
+    --sidebar-foreground: 0 0% 98%;
+    --sidebar-primary: 158 64% 52%;
+    --sidebar-primary-foreground: 240 10% 4%;
+    --sidebar-accent: 240 5% 12%;
+    --sidebar-accent-foreground: 0 0% 98%;
+    --sidebar-border: 240 5% 14%;
+    --sidebar-ring: 158 64% 52%;
+
+    --chart-1: 158 64% 52%;
+    --chart-2: 264 80% 60%;
+    --chart-3: 240 5% 65%;
+    --chart-4: 200 60% 50%;
+    --chart-5: 340 75% 55%;
+
+    /* Custom tokens for ChainQuery */
+    --solana-green: 158 64% 52%;
+    --solana-purple: 264 80% 60%;
+    --editor-bg: 240 10% 6%;
+    --terminal-bg: 240 10% 4%;
+    --glass-bg: 240 10% 8% / 0.8;
+    --glass-border: 240 5% 20% / 0.5;
+
+    --font-sans: 'Inter', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+
+    --shadow-glow: 0 0 20px hsl(158 64% 52% / 0.15);
+    --shadow-glow-purple: 0 0 20px hsl(264 80% 60% / 0.15);
+  }
+
+  .dark {
+    --background: 240 10% 3.9%;
+    --foreground: 0 0% 98%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    @apply dark;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+  }
+}
+
+@layer utilities {
+  .glass {
+    @apply bg-[hsl(var(--glass-bg))] backdrop-blur-xl border border-[hsl(var(--glass-border))];
+  }
+
+  .solana-gradient {
+    background: linear-gradient(135deg, hsl(var(--solana-green)) 0%, hsl(var(--solana-purple)) 100%);
+  }
+
+  .solana-gradient-text {
+    background: linear-gradient(135deg, hsl(var(--solana-green)) 0%, hsl(var(--solana-purple)) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .glow-green {
+    box-shadow: var(--shadow-glow);
+  }
+
+  .glow-purple {
+    box-shadow: var(--shadow-glow-purple);
+  }
+
+  .animate-pulse-slow {
+    animation: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+}
+
+@layer components {
+  .editor-container {
+    @apply bg-[hsl(var(--editor-bg))] border border-border rounded-md overflow-hidden;
+  }
+
+  .terminal-header {
+    @apply flex items-center gap-2 px-4 py-2 bg-[hsl(var(--terminal-bg))] border-b border-border;
+  }
+
+  .terminal-dot {
+    @apply w-3 h-3 rounded-full;
+  }
+}
