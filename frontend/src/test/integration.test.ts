@@ -4,7 +4,7 @@ import { BrowserRouter } from 'react-router-dom';
 import userEvent from '@testing-library/user-event';
 
 // Mock API
-import * as api from '@/lib/api';
+import * as api from '@/api';
 
 describe('Authentication Integration Tests', () => {
     beforeEach(() => {
