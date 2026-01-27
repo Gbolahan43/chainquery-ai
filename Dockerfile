@@ -2,6 +2,7 @@
 # Stage 1: Build Frontend (Node.js)
 # ---------------------------------------
 FROM node:18-alpine AS frontend-builder
+ENV FORCE_REBUILD=1
 
 WORKDIR /frontend-build
 
@@ -11,6 +12,7 @@ RUN npm ci
 
 # Copy source code and build
 COPY frontend/ .
+RUN ls -R /frontend-build/src/lib
 RUN npm run build
 # Result: The static site is now in /frontend-build/dist
 
