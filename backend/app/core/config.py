@@ -1,38 +1,57 @@
 from pydantic_settings import BaseSettings
-from pydantic import PostgresDsn, computed_field
-from typing import Literal
+from pydantic import PostgresDsn, computed_field, field_validator
+from typing import Literal, Optional
 
 class Settings(BaseSettings):
     API_V1_STR: str = "/api/v1"
     PROJECT_NAME: str = "ChainQuery AI"
     ENVIRONMENT: Literal["dev", "prod"] = "dev"
     
-    # Database Credentials
-    POSTGRES_USER: str
-    POSTGRES_PASSWORD: str
-    POSTGRES_SERVER: str
-    POSTGRES_PORT: int
-    POSTGRES_DB: str
+    # Database - Accept DATABASE_URL from Render or individual components
+    DATABASE_URL: Optional[str] = None
+    POSTGRES_USER: Optional[str] = None
+    POSTGRES_PASSWORD: Optional[str] = None
+    POSTGRES_SERVER: Optional[str] = None
+    POSTGRES_PORT: Optional[int] = None
+    POSTGRES_DB: Optional[str] = None
     
-    # AI
-    OPENAI_API_KEY: str
-    GROQ_API_KEY: str | None = None
+    # AI - Make at least one required
+    OPENAI_API_KEY: Optional[str] = None
+    GROQ_API_KEY: Optional[str] = None
 
-    @computed_field
-    @property
-    def DATABASE_URL(self) -> str:
+    @field_validator('DATABASE_URL', mode='before')
+    @classmethod
+    def construct_database_url(cls, v, info):
         """
-        Constructs the Async Postgres URL from individual fields.
-        Format: postgresql+asyncpg://user:pass@host:port/db
+        If DATABASE_URL is not provided, construct it from individual fields.
+        Otherwise, use the provided DATABASE_URL (from Render).
         """
-        return str(PostgresDsn.build(
-            scheme="postgresql+asyncpg",
-            username=self.POSTGRES_USER,
-            password=self.POSTGRES_PASSWORD,
-            host=self.POSTGRES_SERVER,
-            port=self.POSTGRES_PORT,
-            path=self.POSTGRES_DB,
-        ))
+        if v:
+            # Use provided DATABASE_URL (from Render)
+            return v
+        
+        # Construct from individual fields
+        data = info.data
+        user = data.get('POSTGRES_USER')
+        password = data.get('POSTGRES_PASSWORD')
+        server = data.get('POSTGRES_SERVER')
+        port = data.get('POSTGRES_PORT')
+        db = data.get('POSTGRES_DB')
+        
+        if all([user, password, server, port, db]):
+            return str(PostgresDsn.build(
+                scheme="postgresql+asyncpg",
+                username=user,
+                password=password,
+                host=server,
+                port=port,
+                path=db,
+            ))
+        
+        raise ValueError(
+            "Either DATABASE_URL or all of (POSTGRES_USER, POSTGRES_PASSWORD, "
+            "POSTGRES_SERVER, POSTGRES_PORT, POSTGRES_DB) must be provided"
+        )
 
     class Config:
         env_file = ".env"
