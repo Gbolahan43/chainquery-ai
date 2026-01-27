@@ -35,14 +35,8 @@ const App = () => (
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
 
-            {/* Protected Routes */}
-            <Route
-              element={
-                <ProtectedRoute>
-                  <Layout />
-                </ProtectedRoute>
-              }
-            >
+            {/* App Routes - Accessible to both guests and authenticated users */}
+            <Route element={<Layout />}>
               <Route path="/dashboard" element={<Generator />} />
               <Route path="/debug" element={<Debug />} />
             </Route>

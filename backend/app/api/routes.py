@@ -24,8 +24,8 @@ async def generate_query(
     3. Saves the result with session_id (always) and user_id (if authenticated).
     4. Returns the SQL.
     """
-    # 1. Run the Agent
-    inputs = {"user_input": request.user_input, "chain": request.chain}
+    # 1. Run the Agent (only pass fields in AgentState)
+    inputs = {"user_input": request.user_input}
     result = await agent_app.ainvoke(inputs)
     
     sql_result = result.get("sql_output")
