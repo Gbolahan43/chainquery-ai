@@ -13,8 +13,9 @@ class QueryRequest(BaseModel):
 class QueryResponse(BaseModel):
     id: uuid.UUID
     user_input: str
-    sql_output: str
-    error: Optional[str] = None
+    sql_output: Optional[str] = None  # Can be None if generation fails
+    error_message: Optional[str] = None  # Match database field name
+    chain: str = "solana"
     created_at: datetime
     
     class Config:

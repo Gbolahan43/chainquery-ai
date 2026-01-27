@@ -31,6 +31,9 @@ async def generate_query(
     sql_result = result.get("sql_output")
     error_msg = result.get("error")
 
+    # Debug logging
+    print(f"🔍 Agent Result: sql_output={sql_result[:100] if sql_result else None}, error={error_msg}")
+
     # 2. Save to DB (Hybrid Logic)
     db_query = UserQuery(
         user_input=request.user_input,

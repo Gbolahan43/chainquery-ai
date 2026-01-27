@@ -30,7 +30,7 @@ class UserQuery(UUIDModel, table=True):
     __tablename__ = "user_queries"
 
     user_input: str = Field(nullable=False)
-    sql_output: str = Field(nullable=False)
+    sql_output: Optional[str] = Field(default=None, nullable=True)  # Can be null if error occurs
     chain: str = Field(default="solana")
     
     # Auth Logic:
