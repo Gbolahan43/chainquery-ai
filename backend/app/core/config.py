@@ -18,6 +18,9 @@ class Settings(BaseSettings):
     # AI - Make at least one required
     OPENAI_API_KEY: Optional[str] = None
     GROQ_API_KEY: Optional[str] = None
+    
+    # Security
+    SECRET_KEY: str = "your-secret-key-change-in-production"  # Override in .env for production
 
     @field_validator('DATABASE_URL', mode='before')
     @classmethod

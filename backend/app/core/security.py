@@ -15,7 +15,7 @@ def create_access_token(subject: Union[str, Any]) -> str:
     """Generates the JWT string"""
     expire = datetime.utcnow() + timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
     to_encode = {"exp": expire, "sub": str(subject)}
-    encoded_jwt = jwt.encode(to_encode, settings.OPENAI_API_KEY, algorithm=ALGORITHM)  # Using OpenAI Key as secret for MVP simplicity
+    encoded_jwt = jwt.encode(to_encode, settings.SECRET_KEY, algorithm=ALGORITHM)
     return encoded_jwt
 
 def verify_password(plain_password: str, hashed_password: str) -> bool:
