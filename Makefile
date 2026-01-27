@@ -1,51 +1,38 @@
-# ChainQuery AI Makefile
-# Windows-compatible (Powershell/CMD friendly where possible, but optimized for Git Bash/WSL usually)
+.PHONY: dev build up down logs clean shell-backend
 
-.PHONY: install dev build test docker-up docker-down clean help
-
-# Default target
-help:
-	@echo "ChainQuery AI Management Commands:"
-	@echo "  make install      - Install backend and frontend dependencies"
-	@echo "  make dev          - Run both backend and frontend locally"
-	@echo "  make build        - Build the frontend for production"
-	@echo "  make test         - Run backend tests"
-	@echo "  make docker-up    - Start services with Docker Compose"
-	@echo "  make docker-down  - Stop Docker Compose services"
-	@echo "  make clean        - Remove temporary files"
-
-# Install all dependencies
+# --------------------------
+# DEVELOPMENT (Local)
+# --------------------------
 install:
-	@echo "Installing Backend Dependencies..."
-	cd backend && python -m venv venv && ./venv/Scripts/pip install -r requirements.txt
-	@echo "Installing Frontend Dependencies..."
+	cd backend && pip install -r requirements.txt
 	cd frontend && npm install
-	@echo "Installing Root Scripts..."
-	npm install
 
-# Run development servers concurrently
-dev:
-	npm run dev
+# Uses 'concurrently' to run both without Docker for fast dev
+dev-local:
+	npx concurrently "cd backend && uvicorn app.main:app --reload" "cd frontend && npm run dev"
 
-# Build frontend
+# --------------------------
+# DOCKER PRODUCTION
+# --------------------------
 build:
-	cd frontend && npm run build
+	docker-compose -f docker-compose.prod.yml build
 
-# Run tests
-test:
-	cd backend && ./venv/Scripts/pytest
+up:
+	docker-compose -f docker-compose.prod.yml up -d
 
-# Docker Management
-docker-up:
-	docker-compose up -d --build
+down:
+	docker-compose -f docker-compose.prod.yml down
 
-docker-down:
-	docker-compose down
+logs:
+	docker-compose -f docker-compose.prod.yml logs -f
 
-# Cleanup
-clean:
-	rm -rf backend/__pycache__
-	rm -rf backend/venv
-	rm -rf frontend/node_modules
-	rm -rf frontend/dist
-	rm -rf node_modules
+# --------------------------
+# UTILITIES
+# --------------------------
+# Access the DB inside Docker
+db-shell:
+	docker exec -it chainquery_db psql -U postgres -d chainquery
+
+# Run a migration inside the running backend container
+migrate:
+	docker-compose -f docker-compose.prod.yml exec backend alembic upgrade head
