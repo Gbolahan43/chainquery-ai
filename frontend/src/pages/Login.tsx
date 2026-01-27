@@ -11,7 +11,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Separator } from '@/components/ui/separator';
 import { useAuth } from '@/context/AuthContext';
-import { authApi } from '../api';
+import { authApi } from '@/lib/api';
 import { handleGuestAccess } from '@/lib/auth';
 
 const loginSchema = z.object({

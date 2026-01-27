@@ -1,5 +1,5 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { chainQueryApi } from '../api';
+import { chainQueryApi } from '@/lib/api';
 import { getSessionId } from '@/lib/auth';
 
 export interface QueryResponse {
