@@ -12,7 +12,7 @@ RUN npm ci
 
 # Copy source code and build
 COPY frontend/ .
-RUN ls -R /frontend-build/src/lib
+RUN ls -R /frontend-build/src
 RUN npm run build
 # Result: The static site is now in /frontend-build/dist
 
