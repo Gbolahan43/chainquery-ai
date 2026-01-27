@@ -1,0 +1,34 @@
+services:
+  # 1. Modular Monolith (Backend + Frontend)
+  - type: web
+    name: chainquery-app
+    runtime: docker
+    region: oregon
+    plan: free
+    dockerContext: .
+    dockerfilePath: Dockerfile
+    healthCheckPath: /
+    envVars:
+      - key: PORT
+        value: 10000
+      - key: ENVIRONMENT
+        value: prod
+      - key: DATABASE_URL
+        fromDatabase:
+          name: chainquery-db
+          property: connectionString
+      - key: OPENAI_API_KEY
+        sync: false  # Placeholder, must be set in dashboard
+
+databases:
+  # 2. PostgreSQL Database
+  - name: chainquery-db
+    region: oregon
+    plan: free
+    databaseName: chainquery
+    user: chainquery
+
+# This configuration:
+# 1. Creates a free Postgres database
+# 2. Creates a Docker web service from your repo
+# 3. Automatically links the DB to the App via DATABASE_URL
