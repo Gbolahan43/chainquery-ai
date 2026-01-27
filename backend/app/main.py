@@ -45,6 +45,12 @@ import os
 app.include_router(router, prefix=settings.API_V1_STR)
 app.include_router(auth_router, prefix=f"{settings.API_V1_STR}/auth", tags=["auth"])
 
+# Health Check for Railway/Render
+@app.get("/health")
+async def health_check():
+    return {"status": "healthy", "service": settings.PROJECT_NAME}
+
+
 # 3. Serve React Static Files (Modular Monolith)
 # We check if the folder exists (it will in Docker, might not locally)
 static_dir = os.path.join(os.getcwd(), "static_ui")
