@@ -2,6 +2,7 @@ from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
 from sqlalchemy.orm import sessionmaker
 from typing import AsyncGenerator
 from app.core.config import settings
+from app.models.sql import UUIDModel
 
 # 1. Create Async Engine
 # echo=True logs SQL queries to console (Good for debugging, turn off in Prod)
@@ -20,6 +21,13 @@ async_session_factory = sessionmaker(
     expire_on_commit=False,
     autoflush=False
 )
+
+
+async def init_db():
+    """Initialize database - create all tables"""
+    async with engine.begin() as conn:
+        await conn.run_sync(UUIDModel.metadata.create_all)
+
 
 # 3. Dependency for FastAPI
 async def get_db() -> AsyncGenerator[AsyncSession, None]:
