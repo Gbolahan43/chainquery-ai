@@ -15,13 +15,17 @@ export default function Generator() {
 
   const generateMutation = useGenerateSQL();
 
-  // Handle selected query from history
+  // Handle selected query from history OR clear when New Query is clicked
   useEffect(() => {
     if (selectedInput) {
       setInput(selectedInput);
+    } else {
+      setInput('');
     }
     if (selectedSQL) {
       setGeneratedSQL(selectedSQL);
+    } else {
+      setGeneratedSQL('');
     }
   }, [selectedInput, selectedSQL]);
 
