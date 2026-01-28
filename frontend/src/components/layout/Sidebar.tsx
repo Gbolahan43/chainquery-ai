@@ -164,7 +164,7 @@ export function Sidebar({ onSelectQuery, collapsed, onToggle }: SidebarProps) {
         collapsed ? 'flex-col items-center' : 'items-center'
       )}>
         <a
-          href="https://github.com"
+          href="https://github.com/Gbolahan43"
           target="_blank"
           rel="noopener noreferrer"
           className="p-2 rounded-md text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-colors"
@@ -172,7 +172,7 @@ export function Sidebar({ onSelectQuery, collapsed, onToggle }: SidebarProps) {
           <Github className="h-4 w-4" />
         </a>
         <a
-          href="https://twitter.com"
+          href="https://x.com/0xexcellus"
           target="_blank"
           rel="noopener noreferrer"
           className="p-2 rounded-md text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-colors"
@@ -180,7 +180,7 @@ export function Sidebar({ onSelectQuery, collapsed, onToggle }: SidebarProps) {
           <Twitter className="h-4 w-4" />
         </a>
         <a
-          href="https://linkedin.com"
+          href="https://linkedin.com/in/abdulbasit-olanrewaju-gbolahan"
           target="_blank"
           rel="noopener noreferrer"
           className="p-2 rounded-md text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-colors"

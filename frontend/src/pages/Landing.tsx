@@ -237,9 +237,9 @@ export default function Landing() {
                     </div>
 
                     <div className="flex items-center gap-6 text-sm text-muted-foreground">
-                        <a href="#" className="hover:text-foreground transition-colors">Documentation</a>
-                        <a href="#" className="hover:text-foreground transition-colors">GitHub</a>
-                        <a href="#" className="hover:text-foreground transition-colors">Twitter</a>
+                        <a href="https://github.com/Gbolahan43/chainquery-ai" target="_blank" rel="noopener noreferrer" className="hover:text-foreground transition-colors">GitHub</a>
+                        <a href="https://x.com/0xexcellus" target="_blank" rel="noopener noreferrer" className="hover:text-foreground transition-colors">Twitter</a>
+                        <a href="https://linkedin.com/in/abdulbasit-olanrewaju-gbolahan" target="_blank" rel="noopener noreferrer" className="hover:text-foreground transition-colors">LinkedIn</a>
                     </div>
                 </div>
             </footer>

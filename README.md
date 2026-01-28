@@ -37,6 +37,14 @@ ChainQuery AI is an intelligent SQL query generator that transforms natural lang
 
 ---
 
+## 🌐 Live Demo
+
+**Try it now:** [https://chainquery-app.onrender.com](https://chainquery-app.onrender.com)
+
+Experience ChainQuery AI in action! Generate Solana blockchain queries using natural language—no signup required (guest access available).
+
+---
+
 ## 🏗️ Architecture
 
 ### Backend (FastAPI)
@@ -88,7 +96,7 @@ frontend/
 
 ### 1. Clone Repository
 ```bash
-git clone https://github.com/yourusername/chainquery-ai.git
+git clone https://github.com/Gbolahan43/chainquery-ai.git
 cd chainquery-ai
 ```
 
@@ -240,8 +248,18 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 📞 Support
 
-- **Issues**: [GitHub Issues](https://github.com/yourusername/chainquery-ai/issues)
-- **Discussions**: [GitHub Discussions](https://github.com/yourusername/chainquery-ai/discussions)
+- **Issues**: [GitHub Issues](https://github.com/Gbolahan43/chainquery-ai/issues)
+- **Discussions**: [GitHub Discussions](https://github.com/Gbolahan43/chainquery-ai/discussions)
+
+---
+
+## 👨‍💻 Author
+
+**Abdulbasit Gbolahan**
+
+[![Twitter](https://img.shields.io/badge/Twitter-@0xexcellus-1DA1F2?style=flat&logo=twitter&logoColor=white)](https://x.com/0xexcellus)
+[![GitHub](https://img.shields.io/badge/GitHub-Gbolahan43-181717?style=flat&logo=github&logoColor=white)](https://github.com/Gbolahan43)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-0077B5?style=flat&logo=linkedin&logoColor=white)](https://linkedin.com/in/abdulbasit-olanrewaju-gbolahan)
 
 ---
 
