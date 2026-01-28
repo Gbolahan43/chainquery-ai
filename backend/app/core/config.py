@@ -30,7 +30,9 @@ class Settings(BaseSettings):
         Otherwise, use the provided DATABASE_URL (from Render).
         """
         if v:
-            # Use provided DATABASE_URL (from Render)
+            # Convert postgresql:// to postgresql+asyncpg:// for async driver
+            if isinstance(v, str) and v.startswith('postgresql://'):
+                return v.replace('postgresql://', 'postgresql+asyncpg://', 1)
             return v
         
         # Construct from individual fields
