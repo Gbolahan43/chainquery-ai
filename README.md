@@ -7,8 +7,30 @@
 [![Python](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org)
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.100+-green.svg)](https://fastapi.tiangolo.com)
 [![React](https://img.shields.io/badge/React-18-blue.svg)](https://react.dev)
+[![CI/CD](https://github.com/Gbolahan43/chainquery-ai/actions/workflows/ci-cd.yml/badge.svg)](https://github.com/Gbolahan43/chainquery-ai/actions/workflows/ci-cd.yml)
+[![Deploy](https://github.com/Gbolahan43/chainquery-ai/actions/workflows/deploy.yml/badge.svg)](https://github.com/Gbolahan43/chainquery-ai/actions/workflows/deploy.yml)
 
-ChainQuery AI is an intelligent SQL query generator that transforms natural language questions into optimized **DuneSQL (Trino)** queries for the **Solana blockchain**. No more memorizing complex table schemas—just ask your question in plain English.
+ChainQuery AI is an intelligent SQL query generator that transforms natural language questions into optimized **DuneSQL (Trino)** queries for the **Solana blockchain**.
+
+## 🎯 The Problem
+
+Analyzing blockchain data on Solana is complex. Developers and analysts often face:
+- **Steep Learning Curve**: Mastering DuneSQL (Trino) syntax takes time.
+- **Complex Schemas**: Solana data tables are deeply nested and hard to navigate.
+- **Time Consumption**: Writing and debugging queries manually is slow and error-prone.
+
+## 💡 The Solution
+
+ChainQuery AI acts as a smart bridge:
+1. **Just Ask**: User types "Show me the top 10 NFT sales on Magic Eden yesterday".
+2. **AI Processing**: The system understands the intent, maps it to the correct tables, and generates precise SQL.
+3. **Instant Results**: Get a ready-to-run query for Dune Analytics in seconds.
+
+## 🤖 AI-Assisted Development
+
+This project was built using an **Advanced Agentic AI Workflow**.
+- **Model Context Protocol (MCP)**: The AI agent utilized specialized tools to interact with the file system, run terminal commands, and manage deployments autonomously.
+- **Agentic coding**: From scaffolding the project structure to debugging complex Docker deployment issues, the AI acted as a pair programmer, executing tasks and verifying results in real-time.
 
 ---
 
@@ -119,36 +141,33 @@ cp .env.example .env
 # - POSTGRES_* settings
 ```
 
-### 3. Database Setup
+## 🛠️ Technology Stack
 
-```bash
-# Start PostgreSQL (using Docker)
-docker-compose up -d
+### 🎨 Frontend
+- **React 18**: Core framework for building the user interface.
+- **Vite**: Next-generation frontend tooling for ultra-fast builds.
+- **TypeScript**: Ensures type safety and developer productivity.
+- **Tailwind CSS**: Utility-first CSS framework for rapid styling.
+- **shadcn/ui**: High-quality, accessible component library.
 
-# Run migrations
-alembic upgrade head
-```
+### ⚙️ Backend
+- **FastAPI**: Modern, high-performance web framework for Python APIs.
+- **SQLModel**: ORM library combining SQL connectivity with Pydantic validation.
+- **LangGraph**: Framework for building stateful, multi-actor AI agent applications.
+- **Alembic**: Lightweight database migration tool.
 
-### 4. Start Backend Server
+### 🗄️ Database
+- **PostgreSQL**: Robust, open-source object-relational database system.
+- **DuneSQL (Trino)**: SQL dialect used for querying blockchain data.
 
-```bash
-uvicorn app.main:app --reload
-# API will run on http://127.0.0.1:8000
-# Docs available at http://127.0.0.1:8000/docs
-```
+### 🏗️ Infrastructure & DevOps
+- **Docker**: Containerization for consistent environments across dev and prod.
+- **GitHub Actions**: Automated CI/CD pipelines for testing and deployment.
+- **Render**: Cloud platform for hosting the backend and frontend services.
 
-### 5. Frontend Setup
-
-```bash
-cd frontend
-
-# Install dependencies
-npm install
-
-# Start development server
-npm run dev
-# Frontend will run on http://localhost:5173
-```
+### 🧬 AI & Agents
+- **GPT-4 / Claude / Groq**: Advanced Large Language Models (LLMs) used for reasoning.
+- **LangChain**: Framework for developing applications powered by language models.
 
 ---
 
@@ -191,14 +210,31 @@ GROQ_API_KEY=gsk_YOUR_KEY_HERE
 ### Backend Tests
 ```bash
 cd backend
-pytest
+pytest -v --cov=app --cov-report=term-missing
 ```
 
 ### Frontend Tests
 ```bash
 cd frontend
-npm run test
+npm run type-check  # TypeScript checking
+npm run lint        # ESLint
+npm run test        # Run tests
 ```
+
+---
+
+## 🔄 CI/CD Pipeline
+
+ChainQuery AI uses **GitHub Actions** for automated testing and deployment.
+
+### Workflows
+- **CI/CD Pipeline**: Runs tests, linting, and Docker build on every push
+- **Deployment**: Auto-deploys to Render after CI passes on `main` branch
+
+### Status
+[![CI/CD](https://github.com/Gbolahan43/chainquery-ai/actions/workflows/ci-cd.yml/badge.svg)](https://github.com/Gbolahan43/chainquery-ai/actions/workflows/ci-cd.yml)
+
+**Documentation**: See [docs/CICD.md](docs/CICD.md) for detailed CI/CD setup and troubleshooting.
 
 ---
 
