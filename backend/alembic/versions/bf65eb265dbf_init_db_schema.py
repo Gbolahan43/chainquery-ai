@@ -32,7 +32,8 @@ def upgrade():
     )
     op.create_index(op.f('ix_user_queries_chain'), 'user_queries', ['chain'], unique=False)
     op.create_index(op.f('ix_user_queries_id'), 'user_queries', ['id'], unique=False)
-    op.drop_table('userquery')
+    # Drop old table only if exists (for migration from old schema)
+    op.execute('DROP TABLE IF EXISTS userquery')
     # ### end Alembic commands ###
 
 
