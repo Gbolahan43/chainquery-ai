@@ -26,11 +26,13 @@ ChainQuery AI acts as a smart bridge:
 2. **AI Processing**: The system understands the intent, maps it to the correct tables, and generates precise SQL.
 3. **Instant Results**: Get a ready-to-run query for Dune Analytics in seconds.
 
-## 🤖 AI-Assisted Development
+## � AI Agent Architecture
 
-This project was built using an **Advanced Agentic AI Workflow**.
-- **Model Context Protocol (MCP)**: The AI agent utilized specialized tools to interact with the file system, run terminal commands, and manage deployments autonomously.
-- **Agentic coding**: From scaffolding the project structure to debugging complex Docker deployment issues, the AI acted as a pair programmer, executing tasks and verifying results in real-time.
+ChainQuery AI functions as an autonomous **AI Agent** powered by **LangGraph**.
+
+- **Workflow**: The system uses a stateful graph to orchestrate the "thinking" process: `Input` → `Prompt` → `LLM` → `SQL`.
+- **Context**: it intelligently injects database schema and DuneSQL syntax rules into the context.
+- **Details**: See [docs/AGENTS.md](docs/AGENTS.md) for a deep dive into the internal agent architecture.
 
 ---
 

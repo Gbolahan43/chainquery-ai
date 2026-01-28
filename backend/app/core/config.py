@@ -1,5 +1,5 @@
 from pydantic_settings import BaseSettings
-from pydantic import PostgresDsn, computed_field, field_validator
+from pydantic import PostgresDsn, computed_field, field_validator, model_validator
 from typing import Literal, Optional
 
 class Settings(BaseSettings):
@@ -22,39 +22,28 @@ class Settings(BaseSettings):
     # Security
     SECRET_KEY: str = "your-secret-key-change-in-production"  # Override in .env for production
 
-    @field_validator('DATABASE_URL', mode='before')
-    @classmethod
-    def construct_database_url(cls, v, info):
-        """
-        If DATABASE_URL is not provided, construct it from individual fields.
-        Otherwise, use the provided DATABASE_URL (from Render).
-        """
-        if v:
+    @model_validator(mode='after')
+    def assemble_db_connection(self) -> "Settings":
+        v = self.DATABASE_URL
+        if isinstance(v, str):
             # Convert postgres:// OR postgresql:// to postgresql+asyncpg:// for async driver
-            if isinstance(v, str):
-                if v.startswith('postgres://'):
-                    return v.replace('postgres://', 'postgresql+asyncpg://', 1)
-                elif v.startswith('postgresql://'):
-                    return v.replace('postgresql://', 'postgresql+asyncpg://', 1)
-            return v
-        
-        # Construct from individual fields
-        data = info.data
-        user = data.get('POSTGRES_USER')
-        password = data.get('POSTGRES_PASSWORD')
-        server = data.get('POSTGRES_SERVER')
-        port = data.get('POSTGRES_PORT')
-        db = data.get('POSTGRES_DB')
-        
-        if all([user, password, server, port, db]):
-            return str(PostgresDsn.build(
+            if v.startswith('postgres://'):
+                self.DATABASE_URL = v.replace('postgres://', 'postgresql+asyncpg://', 1)
+            elif v.startswith('postgresql://'):
+                self.DATABASE_URL = v.replace('postgresql://', 'postgresql+asyncpg://', 1)
+            return self
+
+        # Construct from individual fields if DATABASE_URL is missing
+        if self.POSTGRES_SERVER and self.POSTGRES_PORT and self.POSTGRES_USER and self.POSTGRES_DB:
+            self.DATABASE_URL = str(PostgresDsn.build(
                 scheme="postgresql+asyncpg",
-                username=user,
-                password=password,
-                host=server,
-                port=port,
-                path=db,
+                username=self.POSTGRES_USER,
+                password=self.POSTGRES_PASSWORD,
+                host=self.POSTGRES_SERVER,
+                port=self.POSTGRES_PORT,
+                path=self.POSTGRES_DB,
             ))
+            return self
         
         raise ValueError(
             "Either DATABASE_URL or all of (POSTGRES_USER, POSTGRES_PASSWORD, "
