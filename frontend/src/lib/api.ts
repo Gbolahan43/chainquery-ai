@@ -1,8 +1,10 @@
 import axios from 'axios';
 
 // Create an Axios instance pointing to the FastAPI backend
+// Use relative URL for production (works with modular monolith setup)
+// Vite dev server proxy will handle this in development
 const api = axios.create({
-  baseURL: 'http://127.0.0.1:8000/api/v1',
+  baseURL: '/api/v1',
   headers: {
     'Content-Type': 'application/json',
   },
