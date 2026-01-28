@@ -42,13 +42,13 @@ export default function Generator() {
         throw new Error(result.error_message);
       }
 
-      setGeneratedSQL(result.sql_output);
+      setGeneratedSQL(result.sql_output || '');
     } catch (error) {
       // Error handling is done via the mutation
     }
   };
 
-  const hasResult = generatedSQL.length > 0 || generateMutation.isPending;
+  const hasResult = generatedSQL.length > 0 || generateMutation.isPending || generateMutation.isError;
 
   return (
     <div className="h-full flex flex-col">

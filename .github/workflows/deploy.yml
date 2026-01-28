@@ -15,8 +15,17 @@ jobs:
 
     steps:
       - name: Trigger Render deployment
+        env:
+          DEPLOY_HOOK: ${{ secrets.RENDER_DEPLOY_HOOK }}
         run: |
-          echo "✅ CI/CD passed! Render will automatically deploy."
+          if [ -n "$DEPLOY_HOOK" ]; then
+            echo "🚀 Triggering Render deployment via webhook..."
+            curl -X POST "$DEPLOY_HOOK"
+            echo "✅ Deployment triggered successfully!"
+          else
+            echo "ℹ️ No deployment hook found (RENDER_DEPLOY_HOOK)."
+            echo "✅ Render is configured for Auto-Deploy. Changes will be picked up automatically."
+          fi
           echo "🔗 Service URL: https://chainquery-app.onrender.com"
           
       - name: Wait for deployment
