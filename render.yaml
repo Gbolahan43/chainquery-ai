@@ -14,21 +14,10 @@ services:
       - key: ENVIRONMENT
         value: prod
       - key: DATABASE_URL
-        fromDatabase:
-          name: chainquery-db
-          property: connectionString
+        sync: false  # Must be set in dashboard (e.g. Supabase connection string)
       - key: OPENAI_API_KEY
         sync: false  # Placeholder, must be set in dashboard
 
-databases:
-  # 2. PostgreSQL Database
-  - name: chainquery-db
-    region: oregon
-    plan: free
-    databaseName: chainquery
-    user: chainquery
-
 # This configuration:
-# 1. Creates a free Postgres database
-# 2. Creates a Docker web service from your repo
-# 3. Automatically links the DB to the App via DATABASE_URL
+# 1. Creates a Docker web service from your repo
+# 2. Relies on an external Database (like Supabase) via the DATABASE_URL environment variable

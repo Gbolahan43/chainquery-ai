@@ -40,10 +40,12 @@ The easiest way to run the full stack locally.
 
 We use **Render** for hosting (Backend + Frontend + DB).
 
-### 1. Setup Postgres
-1. Create a "New PostgreSQL" on Render.
-2. Copy the `Internal Connection URL`.
-3. Save it as `DATABASE_URL` in your Backend service environment variables.
+### 1. Setup Postgres (Supabase)
+1. Create a new project on [Supabase](https://supabase.com).
+2. Go to Project Settings -> Database -> Connection string (URI).
+3. Copy the connection string. Ensure you replace `[YOUR-PASSWORD]` with your actual database password.
+4. If your Supabase connection string uses `postgresql://`, the backend will automatically convert it to `postgresql+asyncpg://` for async compatibility.
+5. Save this URI as `DATABASE_URL` in your Backend service environment variables on Render.
 
 ### 2. Deploy Backend (Web Service)
 1. **Build Command**: 
