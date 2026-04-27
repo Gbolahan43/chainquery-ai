@@ -10,7 +10,11 @@ engine = create_async_engine(
     settings.DATABASE_URL,
     echo=(settings.ENVIRONMENT == "dev"),
     future=True,
-    pool_pre_ping=True  # Handles lost connections automatically
+    pool_pre_ping=True,  # Handles lost connections automatically
+    connect_args={
+        "statement_cache_size": 0,
+        "prepared_statement_cache_size": 0,
+    }
 )
 
 # 2. Session Factory
