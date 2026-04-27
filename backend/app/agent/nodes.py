@@ -43,9 +43,17 @@ async def generate_sql(state: AgentState) -> dict:
         
         # Call the model asynchronously
         response = await llm.ainvoke(messages)
+        content = response.content
         
-        # Clean up the output (remove markdown backticks if the model ignores instructions)
-        clean_sql = response.content.replace("```sql", "").replace("```", "").strip()
+        # Extract SQL from <sql> tags if present (Chain of Thought format)
+        import re
+        sql_match = re.search(r"<sql>(.*?)</sql>", content, re.DOTALL | re.IGNORECASE)
+        
+        if sql_match:
+            clean_sql = sql_match.group(1).strip()
+        else:
+            # Fallback if the model ignores instructions
+            clean_sql = content.replace("```sql", "").replace("```", "").strip()
         
         return {"sql_output": clean_sql, "error": None}
         
