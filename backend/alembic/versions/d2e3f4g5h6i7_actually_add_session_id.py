@@ -18,25 +18,35 @@ depends_on = None
 
 
 def upgrade():
-    # Create users table
-    op.create_table('users',
-        sa.Column('id', sa.Uuid(), nullable=False),
-        sa.Column('created_at', sa.DateTime(), nullable=False),
-        sa.Column('updated_at', sa.DateTime(), nullable=False),
-        sa.Column('email', sqlmodel.sql.sqltypes.AutoString(), nullable=False),
-        sa.Column('hashed_password', sqlmodel.sql.sqltypes.AutoString(), nullable=False),
-        sa.Column('full_name', sqlmodel.sql.sqltypes.AutoString(), nullable=True),
-        sa.PrimaryKeyConstraint('id')
-    )
-    op.create_index(op.f('ix_users_email'), 'users', ['email'], unique=True)
-    op.create_index(op.f('ix_users_id'), 'users', ['id'], unique=False)
+    bind = op.get_bind()
+    from sqlalchemy.engine.reflection import Inspector
+    inspector = Inspector.from_engine(bind)
+    tables = inspector.get_table_names()
 
-    # Add columns to user_queries
-    op.add_column('user_queries', sa.Column('session_id', sqlmodel.sql.sqltypes.AutoString(), nullable=True))
-    op.add_column('user_queries', sa.Column('user_id', sa.Uuid(), nullable=True))
+    # Create users table if it doesn't exist
+    if 'users' not in tables:
+        op.create_table('users',
+            sa.Column('id', sa.Uuid(), nullable=False),
+            sa.Column('created_at', sa.DateTime(), nullable=False),
+            sa.Column('updated_at', sa.DateTime(), nullable=False),
+            sa.Column('email', sqlmodel.sql.sqltypes.AutoString(), nullable=False),
+            sa.Column('hashed_password', sqlmodel.sql.sqltypes.AutoString(), nullable=False),
+            sa.Column('full_name', sqlmodel.sql.sqltypes.AutoString(), nullable=True),
+            sa.PrimaryKeyConstraint('id')
+        )
+        op.create_index(op.f('ix_users_email'), 'users', ['email'], unique=True)
+        op.create_index(op.f('ix_users_id'), 'users', ['id'], unique=False)
+
+    # Add columns to user_queries if they don't exist
+    columns = [c['name'] for c in inspector.get_columns('user_queries')]
     
-    op.create_index(op.f('ix_user_queries_session_id'), 'user_queries', ['session_id'], unique=False)
-    op.create_foreign_key(None, 'user_queries', 'users', ['user_id'], ['id'])
+    if 'session_id' not in columns:
+        op.add_column('user_queries', sa.Column('session_id', sqlmodel.sql.sqltypes.AutoString(), nullable=True))
+        op.create_index(op.f('ix_user_queries_session_id'), 'user_queries', ['session_id'], unique=False)
+        
+    if 'user_id' not in columns:
+        op.add_column('user_queries', sa.Column('user_id', sa.Uuid(), nullable=True))
+        op.create_foreign_key(None, 'user_queries', 'users', ['user_id'], ['id'])
 
 
 def downgrade():
