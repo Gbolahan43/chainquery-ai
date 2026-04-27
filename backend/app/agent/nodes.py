@@ -6,7 +6,7 @@ from app.agent.prompts import SYSTEM_PROMPT
 
 # Initialize the LLM once
 llm = ChatGroq(
-    model="meta-llama/llama-4-maverick-17b-128e-instruct", 
+    model="llama3-70b-8192", 
     api_key=settings.GROQ_API_KEY,
     temperature=0
 )
