@@ -15,9 +15,12 @@ class Settings(BaseSettings):
     POSTGRES_PORT: Optional[int] = None
     POSTGRES_DB: Optional[str] = None
     
-    # AI - Make at least one required
+    # AI
     OPENAI_API_KEY: Optional[str] = None
     GROQ_API_KEY: Optional[str] = None
+    AWS_ACCESS_KEY_ID: Optional[str] = None
+    AWS_SECRET_ACCESS_KEY: Optional[str] = None
+    AWS_DEFAULT_REGION: str = "us-west-2"
     
     # Security
     SECRET_KEY: str = "your-secret-key-change-in-production"  # Override in .env for production

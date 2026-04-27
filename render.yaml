@@ -17,6 +17,12 @@ services:
         sync: false  # Must be set in dashboard (e.g. Supabase connection string)
       - key: OPENAI_API_KEY
         sync: false  # Placeholder, must be set in dashboard
+      - key: AWS_ACCESS_KEY_ID
+        sync: false
+      - key: AWS_SECRET_ACCESS_KEY
+        sync: false
+      - key: AWS_DEFAULT_REGION
+        value: us-west-2
 
 # This configuration:
 # 1. Creates a Docker web service from your repo
