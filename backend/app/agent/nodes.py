@@ -52,8 +52,9 @@ async def generate_sql(state: AgentState) -> dict:
         if sql_match:
             clean_sql = sql_match.group(1).strip()
         else:
-            # Fallback if the model ignores instructions
-            clean_sql = content.replace("```sql", "").replace("```", "").strip()
+            # Fallback if the model ignores instructions: Strip thinking tags completely
+            clean_content = re.sub(r"<thinking>.*?</thinking>", "", content, flags=re.DOTALL | re.IGNORECASE).strip()
+            clean_sql = clean_content.replace("```sql", "").replace("```", "").strip()
         
         return {"sql_output": clean_sql, "error": None}
         
